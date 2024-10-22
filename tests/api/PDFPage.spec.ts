@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { PDFArray, PDFDocument, PDFName, StandardFonts } from 'src/index';
+import { PDFArray, PDFDocument, PDFName, PDFRef, StandardFonts } from 'src/index';
 
 const birdPng = fs.readFileSync('assets/images/greyscale_bird.png');
 
@@ -147,5 +147,26 @@ describe(`PDFPage`, () => {
     const key2 = page2.node.normalizedEntries().Font.keys()[1];
     expect(key1).not.toEqual(key2);
     expect(page2.node.normalizedEntries().Font.keys()).toEqual([key1, key2]);
+  });
+
+  it(`drawLink() creates a PDFRef inside the Annots node`, async () => {
+    const pdfDoc = await PDFDocument.create();
+    const page = pdfDoc.addPage();
+
+    page.drawLink(
+      'https://pdf-lib.js.org', 
+      {
+        x: 5,
+        y: 5,
+        width: 20,
+        height: 50,
+      }
+    );
+
+    const annots = page.node.normalizedEntries().Annots;
+    expect(annots).toBeInstanceOf(PDFArray);
+    expect(annots.size()).toEqual(1);
+    const pdfRef = annots.asArray().pop();
+    expect(pdfRef).toBeInstanceOf(PDFRef);
   });
 });
