@@ -3,7 +3,7 @@ import { PDFArray, PDFDocument, PDFName, StandardFonts } from 'src/index';
 
 const birdPng = fs.readFileSync('assets/images/greyscale_bird.png');
 
-describe(`PDFDocument`, () => {
+describe(`PDFPage`, () => {
   describe(`getSize() method`, () => {
     it(`returns the width and height of the the page's MediaBox`, async () => {
       const pdfDoc = await PDFDocument.create();
