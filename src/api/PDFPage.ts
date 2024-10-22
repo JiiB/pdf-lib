@@ -1,8 +1,4 @@
-import {
-  Color,
-  colorToComponents,
-  rgb
-} from 'src/api/colors';
+import { Color, colorToComponents, rgb } from 'src/api/colors';
 import {
   drawImage,
   drawLine,
@@ -1331,10 +1327,9 @@ export default class PDFPage {
     );
   }
 
-
-/**
+  /**
    * Draw a link on this page.
-   * 
+   *
    * In the PDF specification,you define a rectangular section of the page
    * that when clicked should activate the link
    *
@@ -1357,9 +1352,7 @@ export default class PDFPage {
     assertIs(options.height, 'options.height', ['number']);
 
     assertOrUndefined(options.borderWidth, 'options.borderWidth', ['number']);
-    assertOrUndefined(options.color, 'options.color', [
-      [Object, 'Color'],
-    ]);
+    assertOrUndefined(options.color, 'options.color', [[Object, 'Color']]);
 
     const pdfRef: PDFRef = this.doc.context.register(
       this.doc.context.obj({
@@ -1373,7 +1366,7 @@ export default class PDFPage {
           // upper right x coord
           options.x + options.width,
           // upper right y coord
-          options.y + options.height
+          options.y + options.height,
         ],
 
         // The three parameters are:
@@ -1387,8 +1380,8 @@ export default class PDFPage {
         /* Default to transparent */
         C: options.color ? colorToComponents(options.color) : [],
 
-			// Name unique identifier
-			// NM: string
+        // Name unique identifier
+        // NM: string
 
         /* Page to be visited when the link is clicked */
         A: {
@@ -1396,9 +1389,9 @@ export default class PDFPage {
           S: 'URI',
           URI: PDFString.of(link),
         },
-      })
-    )
-    
+      }),
+    );
+
     // Annots Dictionary may or may not exist--create it if it doesn't.
     if (this.node.Annots()) {
       this.node.Annots()?.push(pdfRef);
