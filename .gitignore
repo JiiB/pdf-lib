@@ -1,8 +1,7 @@
 scratchpad/build/
-apps/node-build/
 node_modules/
 coverage/
-ts3.4/
+
 
 tsBuildInfo.json
 flamegraph.html
